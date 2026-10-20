@@ -1,0 +1,6 @@
+/goshort
+*.db
+*.db-shm
+*.db-wal
+.idea/
+.DS_Store
