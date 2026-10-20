@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	{{template "head"}}
+	<title>GoShort — сокращение ссылок</title>
+</head>
+<body>
+{{template "header"}}
+<main class="container">
+	<section class="hero">
+		<h1>Короткие ссылки за одну секунду</h1>
+		<p>Вставьте длинный адрес, получите короткую ссылку и следите за количеством переходов.</p>
+	</section>
+
+	<form id="shorten-form" class="card" novalidate>
+		<div class="row">
+			<input id="url" name="url" type="text" placeholder="https://example.com/очень/длинная/ссылка" autocomplete="off" autofocus>
+			<button type="submit" id="submit">Сократить</button>
+		</div>
+		<details class="extra">
+			<summary>Дополнительные параметры</summary>
+			<div class="extra-grid">
+				<label>
+					Свой псевдоним
+					<span class="prefixed">
+						<span class="prefix">{{.BaseURL}}/</span>
+						<input id="alias" name="alias" type="text" placeholder="my-link" maxlength="32">
+					</span>
+				</label>
+				<label>
+					Срок действия
+					<select id="ttl" name="ttl">
+						<option value="0">Бессрочно</option>
+						<option value="1">1 час</option>
+						<option value="24">1 сутки</option>
+						<option value="168">7 дней</option>
+						<option value="720">30 дней</option>
+					</select>
+				</label>
+			</div>
+		</details>
+		<p id="error" class="error" hidden></p>
+	</form>
+
+	<section id="result" class="card result" hidden>
+		<div class="result-head">Ссылка готова</div>
+		<div class="short-row">
+			<a id="short-url" href="#" target="_blank" rel="noopener"></a>
+			<button type="button" class="secondary" id="copy">Копировать</button>
+		</div>
+		<p class="muted" id="original"></p>
+		<p class="muted" id="expires"></p>
+		<a id="stats-link" class="link" href="#">Открыть статистику →</a>
+	</section>
+
+	<section class="card history">
+		<div class="history-head">
+			<h2>Мои ссылки</h2>
+			<button type="button" class="ghost" id="clear-history">Очистить</button>
+		</div>
+		<ul id="history-list"></ul>
+		<p id="history-empty" class="muted">Здесь появятся ссылки, которые вы сократили в этом браузере.</p>
+	</section>
+</main>
+{{template "footer"}}
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	{{template "head"}}
+	<title>Статистика /{{.Link.Code}} — GoShort</title>
+</head>
+<body>
+{{template "header"}}
+<main class="container">
+	<section class="card">
+		<div class="stats-head">
+			<div>
+				<div class="label">Короткая ссылка</div>
+				<div class="short-row">
+					<a href="{{.ShortURL}}" target="_blank" rel="noopener">{{.ShortURL}}</a>
+					<button type="button" class="secondary" data-copy="{{.ShortURL}}">Копировать</button>
+				</div>
+			</div>
+			<div class="total">
+				<div class="total-num">{{.Link.Clicks}}</div>
+				<div class="label">переходов всего</div>
+			</div>
+		</div>
+		<dl class="meta">
+			<dt>Исходный адрес</dt>
+			<dd class="break">{{.Link.OriginalURL}}</dd>
+			<dt>Создана</dt>
+			<dd>{{date .Link.CreatedAt}}</dd>
+			<dt>Действует до</dt>
+			<dd>
+				{{if .Link.ExpiresAt}}{{date .Link.ExpiresAt}}{{else}}бессрочно{{end}}
+				{{if .Expired}}<span class="badge">истекла</span>{{end}}
+			</dd>
+		</dl>
+	</section>
+
+	<div class="grid-2">
+		<section class="card">
+			<h2>Переходы за 7 дней</h2>
+			<div class="chart">
+				{{range .ByDay}}
+				<div class="bar-col">
+					<div class="bar-val">{{.Count}}</div>
+					<div class="bar-track"><div class="bar" style="height: {{percent .Count $.MaxDay}}%"></div></div>
+					<div class="bar-day">{{day .}}</div>
+				</div>
+				{{end}}
+			</div>
+		</section>
+
+		<section class="card">
+			<h2>Источники переходов</h2>
+			{{if .Sources}}
+			<table class="sources">
+				<thead><tr><th>Источник</th><th>Переходы</th></tr></thead>
+				<tbody>
+				{{range .Sources}}
+					<tr><td>{{source .Source}}</td><td>{{.Count}}</td></tr>
+				{{end}}
+				</tbody>
+			</table>
+			{{else}}
+			<p class="muted">По ссылке ещё никто не переходил.</p>
+			{{end}}
+		</section>
+	</div>
+</main>
+{{template "footer"}}
+<script src="/static/app.js"></script>
+</body>
+</html>

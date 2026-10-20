@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	{{template "head"}}
+	<title>{{.Title}} — GoShort</title>
+</head>
+<body>
+{{template "header"}}
+<main class="container">
+	<section class="card error-page">
+		<div class="error-code">{{.Status}}</div>
+		<h1>{{.Title}}</h1>
+		<p class="muted">{{.Text}}</p>
+		<a class="button" href="/">На главную</a>
+	</section>
+</main>
+{{template "footer"}}
+</body>
+</html>
